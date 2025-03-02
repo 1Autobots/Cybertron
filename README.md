@@ -32,6 +32,15 @@ docker run --gpus all -it -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix f
 ````
 Then the same example can be ran.
 
+## Utils
+
+Code to convert block map to edge map to be able to run in f1tenth_gym
+
+opencv setup for image processing utils
+
+``` 
+pip install opencv-python
+```
 ## Known issues
 - Library support issues on Windows. You must use Python 3.8 as of 10-2021
 - On MacOS Big Sur and above, when rendering is turned on, you might encounter the error:
