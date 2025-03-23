@@ -1,0 +1,13 @@
+launch
+    !-- Launch RealSense Camera --
+    include file=$(find realsense2_camera)launchrs_camera.launch 
+
+    !-- Launch AprilTag Detection --
+    node pkg=apriltag_ros type=apriltag_node name=apriltag_node
+        param name=image_topic value=cameracolorimage_raw
+        param name=camera_info_topic value=cameracolorcamera_info
+        param name=tag_family value=tag36h11
+        param name=marker_size value=0.165
+        param name=publish_tf value=true
+    node
+launch
