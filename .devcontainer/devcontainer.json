@@ -1,0 +1,9 @@
+{
+    "build" : {"dockerfile": "Dockerfile" },
+    "runArgs" : [
+        "--net", "host",
+        "-e", "DISPLAY=:0",
+        "-e", "XAUTHORITY=/tmp/.Xauthority",
+        "-v", "${localEnv:HOME}/.Xauthority:/tmp/.Xauthority"
+    ]
+}
