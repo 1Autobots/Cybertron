@@ -1,5 +1,5 @@
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument
+from launch.actions import DeclareLaunchArgument, ExecuteProcess
 from launch.conditions import IfCondition, UnlessCondition
 from launch.substitutions import Command, LaunchConfiguration
 from launch_ros.actions import Node
@@ -20,8 +20,9 @@ def generate_launch_description():
         package='joint_state_publisher',
         executable='joint_state_publisher',
         name='joint_state_publisher',
+        arguments=[default_model_path], #Add this line
         parameters=[{'robot_description': Command(['xacro ', default_model_path])}],
-        condition=UnlessCondition(LaunchConfiguration('gui'))
+        #condition=UnlessCondition(LaunchConfiguration('gui'))
     )
     joint_state_publisher_gui_node = Node(
         package='joint_state_publisher_gui',
@@ -37,12 +38,21 @@ def generate_launch_description():
         arguments=['-d', LaunchConfiguration('rvizconfig')],
     )
 
+    spawn_entity = Node(
+        package='gazebo_ros',
+        executable='spawn_entity.py',
+        arguments=['-entity', 'ackermann_steering_vehicle', '-topic', 'robot_description'],
+        output='screen'
+    )
+
     return LaunchDescription([
         DeclareLaunchArgument(name='gui', default_value='True', description='Flag to enable joint_state_publisher_gui'),
         DeclareLaunchArgument(name='model', default_value=default_model_path, description='Absolute path to robot model file'),
         DeclareLaunchArgument(name='rvizconfig', default_value=default_rviz_config_path, description='Absolute path to rviz config file'),
+        ExecuteProcess(cmd=['gazebo', '--verbose', '-s', 'libgazebo_ros_init.so', '-s', 'libgazebo_ros_factory.so'], output='screen'),
         joint_state_publisher_node,
         joint_state_publisher_gui_node,
         robot_state_publisher_node,
+        spawn_entity,
         rviz_node
     ])
