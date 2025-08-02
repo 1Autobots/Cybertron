@@ -1,9 +1,20 @@
 {
-    "build" : {"dockerfile": "Dockerfile" },
+    "build" : {
+        "dockerfile": "Dockerfile",
+        "args": {
+            "USERNAME": "${localEnv:USER}",
+            "USER_UID": "${localEnv:REMOTE_UID:1000}",
+            "USER_GID": "${localEnv:REMOTE_GID:1000}"
+        }
+    },
     "runArgs" : [
         "--net", "host",
         "-e", "DISPLAY=:0",
         "-e", "XAUTHORITY=/tmp/.Xauthority",
-        "-v", "${localEnv:HOME}/.Xauthority:/tmp/.Xauthority"
-    ]
+        "-e", "TERM", 
+        "-v", "/tmp/.X11-unix:/tmp/.X11-unix",
+        "-v", "${localEnv:XAUTHORITY}:/tmp/.Xauthority",
+        "-h", "${localEnv:HOSTNAME}-docker"
+    ],
+    "remoteUser": "${localEnv:USER}"
 }
