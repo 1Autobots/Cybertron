@@ -10,6 +10,7 @@ def generate_launch_description():
     pkg_share = FindPackageShare(package='robot_challenge_description').find('robot_challenge_description')
     default_model_path = os.path.join(pkg_share, 'src', 'description', 'robot_challenge_description.urdf')
     default_rviz_config_path = os.path.join(pkg_share, 'rviz', 'config.rviz')
+    track_world_path = os.path.join(pkg_share, 'gazebo', 'maps', 'track', 'track.sdf')
 
     robot_state_publisher_node = Node(
         package='robot_state_publisher',
@@ -28,7 +29,7 @@ def generate_launch_description():
         package='joint_state_publisher_gui',
         executable='joint_state_publisher_gui',
         name='joint_state_publisher_gui',
-        condition=IfCondition(LaunchConfiguration('gui'))
+        #condition=IfCondition(LaunchConfiguration('gui'))
     )
     rviz_node = Node(
         package='rviz2',
@@ -46,12 +47,12 @@ def generate_launch_description():
     )
 
     return LaunchDescription([
-        DeclareLaunchArgument(name='gui', default_value='True', description='Flag to enable joint_state_publisher_gui'),
+        #DeclareLaunchArgument(name='gui', default_value='True', description='Flag to enable joint_state_publisher_gui'),
         DeclareLaunchArgument(name='model', default_value=default_model_path, description='Absolute path to robot model file'),
         DeclareLaunchArgument(name='rvizconfig', default_value=default_rviz_config_path, description='Absolute path to rviz config file'),
-        ExecuteProcess(cmd=['gazebo', '--verbose', '-s', 'libgazebo_ros_init.so', '-s', 'libgazebo_ros_factory.so'], output='screen'),
+        ExecuteProcess(cmd=['gazebo', '--verbose', '-s', 'libgazebo_ros_init.so', '-s', 'libgazebo_ros_factory.so', track_world_path], output='screen'),
         joint_state_publisher_node,
-        joint_state_publisher_gui_node,
+        #joint_state_publisher_gui_node,
         robot_state_publisher_node,
         spawn_entity,
         rviz_node

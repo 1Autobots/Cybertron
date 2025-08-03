@@ -12,7 +12,18 @@ source /opt/ros/humble/setup.bash
 cd robot_challenge_description
 colcon build
 . install/local_setup.sh
-ros2 launch robot_challenge_description display.launch.py
 export GAZEBO_MODEL_PATH="/workspaces/Cybertron/robot_challenge_description/gazebo/maps/"
+ros2 launch robot_challenge_description display.launch.py
 gazebo test.sdf
+```
+
+
+To convert the urdf (with xacro macros) to a urdf that can be used in other locations
+```bash
+xacro -o robot_challenge_description_finalized.urdf robot_challenge_description.urdf 
+```
+
+To convert the urdf (without xacro macro) to an sdf for gazebo
+```bash
+gz sdf -p robot_challenge_description_finalized.urdf > robot_challenge_description.sdf
 ```

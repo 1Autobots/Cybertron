@@ -23,7 +23,7 @@
   <xacro:arg name="camera_stick_size" default="0.2" />
   <xacro:arg name="camera_height" default="1.5" />
   <xacro:arg name="camera_pitch" default="0.1" />
-  <xacro:arg name="camera_fov" default="90" />
+  <xacro:arg name="camera_fov" default="1.570796" />
   <xacro:arg name="camera_fps" default="30" />
   <xacro:arg name="image_width" default="640" />
   <xacro:arg name="image_height" default="480" />
@@ -138,11 +138,11 @@
         <cylinder length="0.001" radius="0.01"/>
       </geometry>
     </collision>
-    <!-- <inertial>
+    <inertial>
       <mass value="0.01"/>
-      <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
       <origin xyz="0.0 0.0 0.0" rpy="1.570795 0.0 0.0"/>
-    </inertial> -->
+    </inertial>
   </link>
 
   <!-- Front Right Wheel -->
@@ -186,11 +186,11 @@
         <cylinder length="0.001" radius="0.01"/>
       </geometry>
     </collision>
-    <!-- <inertial>
+    <inertial>
       <mass value="0.01"/>
-      <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
       <origin xyz="0.0 0.0 0.0" rpy="1.570795 0.0 0.0"/>
-    </inertial> -->
+    </inertial>
   </link>
 
   <!-- Rear Left Wheel -->
@@ -487,13 +487,13 @@
       <joint_name>rear_right_wheel_joint</joint_name>
     </plugin>
 
-    <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+    <plugin filename="libgz_ros2_control-system.so" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
       <parameters>$(find robot_challenge_description)/config/gz_ros2_control.yaml</parameters>
     </plugin>
 
-    <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+    <!-- <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
       <render_engine>ogre2</render_engine>
-    </plugin>
+    </plugin> -->
   </gazebo>
 
   <!-- Camera -->
@@ -604,28 +604,47 @@
   </sensor>
 </gazebo>
 
-<!-- <gazebo>
+<gazebo>
   <plugin filename="libgazebo_ros_ackermann_drive.so" name="ackermann_plugin">
-  <ros>
-    <namespace>ackermann</namespace>
-    <remapping>cmd_vel:=cmd_vel</remapping>
-    <remapping>odom:=odom</remapping>
-    <remapping>distance:=distance</remapping>
-  </ros>
+    <ros>
+      <namespace>ackermann</namespace>
+      <remapping>cmd_vel:=cmd_vel</remapping>
+      <remapping>odom:=odom</remapping>
+      <remapping>distance:=distance</remapping>
+    </ros>
 
 
-  <left_joint>front_left_wheel_joint</left_joint>
-  <left_joint>rear_left_wheel_joint</left_joint>
-  <right_joint>front_right_wheel_joint</right_joint>
-  <right_joint>rear_right_wheel_joint</right_joint>
+    <!-- <left_joint>front_left_wheel_joint</left_joint>
+    <left_joint>rear_left_wheel_joint</left_joint>
+    <right_joint>front_right_wheel_joint</right_joint>
+    <right_joint>rear_right_wheel_joint</right_joint> 
+    -->
 
-  <left_steering_joint>front_left_steering_joint</left_steering_joint>
-  <right_steering_joint>front_right_steering_joint</right_steering_joint>
+    <!--
+    Docs
+    https://docs.ros.org/en/rolling/p/gazebo_plugins/generated/classgazebo__plugins_1_1GazeboRosAckermannDrive.html
+    -->
 
-  <wheel_separation>${body_width}</wheel_separation>
+    <left_steering_joint>front_left_steering_joint</left_steering_joint>
+    <right_steering_joint>front_right_steering_joint</right_steering_joint>
+    <front_right_joint>front_right_wheel_joint</front_right_joint>
+    <front_left_joint>front_left_wheel_joint</front_left_joint>
+    <rear_right_joint>rear_right_wheel_joint</rear_right_joint>
+    <rear_left_joint>rear_left_wheel_joint</rear_left_joint>
+
+    <wheel_separation>${body_width}</wheel_separation>
+
+    <!-- output -->
+    <publish_odom>true</publish_odom>
+    <publish_odom_tf>true</publish_odom_tf>
+    <publish_wheel_tf>true</publish_wheel_tf>
+    <publish_distance>true</publish_distance>
+
+    <odometry_frame>odom_demo</odometry_frame>
+    <robot_base_frame>base_link</robot_base_frame>
 
   </plugin>
-</gazebo> -->
+</gazebo>
 
 
 </robot>

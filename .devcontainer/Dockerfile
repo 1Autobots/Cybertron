@@ -42,6 +42,8 @@ RUN apt-get update --fix-missing && \
                        ros-humble-turtlebot3-gazebo \
                        ros-humble-joint-state-publisher-gui \
                        ros-humble-xacro \
+                       ros-humble-gz-ros2-control \
+                       libgz-sensors6-dev \
                     #    ros-humble-turtlebot3-messages 
                        ros-humble-turtlebot3-bringup
 
