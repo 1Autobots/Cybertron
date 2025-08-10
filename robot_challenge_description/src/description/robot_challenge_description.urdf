@@ -4,22 +4,42 @@
 <!-- |    EDITING THIS FILE BY HAND IS NOT RECOMMENDED                                 | -->
 <!-- =================================================================================== -->
 <robot name="ackermann_steering_vehicle">
+  <!-- <xacro:arg name="camera_length" default=".0254" />
+  <xacro:arg name="camera_width" default=".10" />
+  <xacro:arg name="camera_height" default="0.0254" />
+  <xacro:arg name="lidar_length" default=".10" />
+  <xacro:arg name="lidar_width" default=".10" />
+  <xacro:arg name="lidar_height" default="0.10" /> -->
+  <!-- Materials -->
+  <material name="gray_25">
+    <color rgba="0.25 0.25 0.25 1.0"/>
+  </material>
+  <material name="gray_50">
+    <color rgba="0.50 0.50 0.50 1.0"/>
+  </material>
+  <material name="gray_75">
+    <color rgba="0.75 0.75 0.75 1.0"/>
+  </material>
+  <material name="camera_color">
+    <color rgba="0.70 0.2 0.2 1.0"/>
+  </material>
+  <material name="lidar_color">
+    <color rgba="0.2 0.7 0.2 1.0"/>
+  </material>
   <!-- Links -->
   <!-- Body Link -->
   <link name="base_link">
     <visual>
       <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <box size="0.557 0.249 0.241"/>
+        <box size="0.474 0.192 0.138"/>
       </geometry>
-      <material name="body_material">
-        <color rgba="0.25 0.25 0.25 1.0"/>
-      </material>
+      <material name="gray_25"/>
     </visual>
     <collision>
       <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <box size="0.557 0.249 0.241"/>
+        <box size="0.474 0.192 0.138"/>
       </geometry>
     </collision>
   </link>
@@ -28,7 +48,7 @@
     <visual>
       <origin rpy="1.570795 0.0 0.0" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <cylinder length="0.05" radius="0.058"/>
+        <cylinder length="0.068" radius="0.0575"/>
       </geometry>
       <material name="wheel_material">
         <color rgba="0.0 0.0 0.0 1.0"/>
@@ -37,12 +57,12 @@
     <collision>
       <origin rpy="1.570795 0.0 0.0" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <cylinder length="0.05" radius="0.058"/>
+        <cylinder length="0.068" radius="0.0575"/>
       </geometry>
     </collision>
     <inertial>
-      <mass value="0.52841588373"/>
-      <inertia ixx="0.0005544844006606801" ixy="0.0" ixz="0.0" iyy="0.0005544844006606801" iyz="0" izz="0.0008887955164338601"/>
+      <mass value="0.70630856753625"/>
+      <inertia ixx="0.0008559724100448167" ixy="0.0" ixz="0.0" iyy="0.0008559724100448167" iyz="0" izz="0.0011676163507083634"/>
       <origin rpy="1.570795 0.0 0.0" xyz="0.0 0.0 0.0"/>
     </inertial>
   </link>
@@ -74,7 +94,7 @@
     <visual>
       <origin rpy="1.570795 0.0 0.0" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <cylinder length="0.05" radius="0.058"/>
+        <cylinder length="0.068" radius="0.0575"/>
       </geometry>
       <material name="wheel_material">
         <color rgba="0.0 0.0 0.0 1.0"/>
@@ -83,12 +103,12 @@
     <collision>
       <origin rpy="1.570795 0.0 0.0" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <cylinder length="0.05" radius="0.058"/>
+        <cylinder length="0.068" radius="0.0575"/>
       </geometry>
     </collision>
     <inertial>
-      <mass value="0.52841588373"/>
-      <inertia ixx="0.0005544844006606801" ixy="0.0" ixz="0.0" iyy="0.0005544844006606801" iyz="0" izz="0.0008887955164338601"/>
+      <mass value="0.70630856753625"/>
+      <inertia ixx="0.0008559724100448167" ixy="0.0" ixz="0.0" iyy="0.0008559724100448167" iyz="0" izz="0.0011676163507083634"/>
       <origin rpy="1.570795 0.0 0.0" xyz="0.0 0.0 0.0"/>
     </inertial>
   </link>
@@ -120,7 +140,7 @@
     <visual>
       <origin rpy="1.570795 0.0 0.0" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <cylinder length="0.05" radius="0.058"/>
+        <cylinder length="0.068" radius="0.0575"/>
       </geometry>
       <material name="wheel_material">
         <color rgba="0.0 0.0 0.0 1.0"/>
@@ -129,12 +149,12 @@
     <collision>
       <origin rpy="1.570795 0.0 0.0" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <cylinder length="0.05" radius="0.058"/>
+        <cylinder length="0.068" radius="0.0575"/>
       </geometry>
     </collision>
     <inertial>
       <mass value="2"/>
-      <inertia ixx="0.0005544844006606801" ixy="0.0" ixz="0.0" iyy="0.0005544844006606801" iyz="0" izz="0.0008887955164338601"/>
+      <inertia ixx="0.0008559724100448167" ixy="0.0" ixz="0.0" iyy="0.0008559724100448167" iyz="0" izz="0.0011676163507083634"/>
       <origin rpy="1.570795 0.0 0.0" xyz="0.0 0.0 0.0"/>
     </inertial>
   </link>
@@ -143,7 +163,7 @@
     <visual>
       <origin rpy="1.570795 0.0 0.0" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <cylinder length="0.05" radius="0.058"/>
+        <cylinder length="0.068" radius="0.0575"/>
       </geometry>
       <material name="wheel_material">
         <color rgba="0.0 0.0 0.0 1.0"/>
@@ -152,12 +172,12 @@
     <collision>
       <origin rpy="1.570795 0.0 0.0" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <cylinder length="0.05" radius="0.058"/>
+        <cylinder length="0.068" radius="0.0575"/>
       </geometry>
     </collision>
     <inertial>
       <mass value="2"/>
-      <inertia ixx="0.0005544844006606801" ixy="0.0" ixz="0.0" iyy="0.0005544844006606801" iyz="0" izz="0.0008887955164338601"/>
+      <inertia ixx="0.0008559724100448167" ixy="0.0" ixz="0.0" iyy="0.0008559724100448167" iyz="0" izz="0.0011676163507083634"/>
       <origin rpy="1.570795 0.0 0.0" xyz="0.0 0.0 0.0"/>
     </inertial>
   </link>
@@ -166,13 +186,13 @@
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <box size="0.01 0.01 0.01"/>
+        <box size="0.01 0.01 0.0254"/>
       </geometry>
     </collision>
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <box size="0.01 0.01 0.01"/>
+        <box size="0.01 0.01 0.0254"/>
       </geometry>
       <material name="camera_stick_material">
         <color rgba="0.25 0.25 0.25 1.0"/>
@@ -189,17 +209,15 @@
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <box size="0.01 0.01 0.01"/>
+        <box size="0.0254 0.1 0.0254"/>
       </geometry>
     </collision>
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <box size="0.01 0.01 0.01"/>
+        <box size="0.0254 0.1 0.0254"/>
       </geometry>
-      <material name="camera_material">
-        <color rgba="0.0 0.0 0.0 1.0"/>
-      </material>
+      <material name="camera_color"/>
     </visual>
     <inertial>
       <mass value="1e-5"/>
@@ -207,24 +225,44 @@
       <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/>
     </inertial>
   </link>
-  <!-- IMU Link -->
-  <link name="imu_link">
-    <visual>
-      <geometry>
-        <box size="0.1 0.1 0.1"/>
-      </geometry>
-    </visual>
+  <!-- Lidar Link -->
+  <link name="lidar_link">
     <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <box size="0.1 0.1 0.1"/>
+        <cylinder length="0.0528" radius="0.0325"/>
       </geometry>
     </collision>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.0528" radius="0.0325"/>
+      </geometry>
+      <material name="lidar_color"/>
+    </visual>
+  </link>
+  <!-- IMU Link -->
+  <link name="imu_link">
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.0254 0.1 0.0254"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.0254 0.1 0.0254"/>
+      </geometry>
+    </visual>
     <inertia ixx="0.00016666666666666672" ixy="0" ixz="0" iyy="0.00016666666666666672" iyz="0" izz="0.00016666666666666672"/>
+  </link>
+  <link name="steering_wheel_link">
   </link>
   <!-- Joints -->
   <!-- Front Left Steering Joint -->
   <joint name="front_left_steering_joint" type="revolute">
-    <origin rpy="0 0 0" xyz="0.22050000000000003 0.1495 -0.029"/>
+    <origin rpy="0 0 0" xyz="0.1795 0.13 -0.069"/>
     <parent link="base_link"/>
     <child link="front_left_steering_link"/>
     <axis xyz="0 0 1"/>
@@ -237,12 +275,12 @@
     <parent link="front_left_steering_link"/>
     <child link="front_left_wheel_link"/>
     <axis xyz="0 1 0"/>
-    <limit effort="10.0" velocity="17.241379310344826"/>
+    <limit effort="10.0" velocity="17.391304347826086"/>
     <dynamics damping="0.1" friction="0.1"/>
   </joint>
   <!-- Front Right Steering Joint -->
   <joint name="front_right_steering_joint" type="revolute">
-    <origin rpy="0 0 0" xyz="0.22050000000000003 -0.1495 -0.029"/>
+    <origin rpy="0 0 0" xyz="0.1795 -0.13 -0.069"/>
     <parent link="base_link"/>
     <child link="front_right_steering_link"/>
     <axis xyz="0 0 1"/>
@@ -255,47 +293,59 @@
     <parent link="front_right_steering_link"/>
     <child link="front_right_wheel_link"/>
     <axis xyz="0 1 0"/>
-    <limit effort="10.0" velocity="17.241379310344826"/>
+    <limit effort="10.0" velocity="17.391304347826086"/>
     <dynamics damping="0.1" friction="0.1"/>
   </joint>
   <!-- Rear Left Wheel Joint -->
   <joint name="rear_left_wheel_joint" type="continuous">
-    <origin rpy="0 0 0" xyz="-0.22050000000000003 0.1495 -0.029"/>
+    <origin rpy="0 0 0" xyz="-0.1795 0.13 -0.069"/>
     <parent link="base_link"/>
     <child link="rear_left_wheel_link"/>
     <axis xyz="0 1 0"/>
-    <limit effort="10.0" velocity="17.241379310344826"/>
+    <limit effort="10.0" velocity="17.391304347826086"/>
     <dynamics damping="0.1" friction="0.1"/>
   </joint>
   <!-- Rear Right Wheel Joint -->
   <joint name="rear_right_wheel_joint" type="continuous">
-    <origin rpy="0 0 0" xyz="-0.22050000000000003 -0.1495 -0.029"/>
+    <origin rpy="0 0 0" xyz="-0.1795 -0.13 -0.069"/>
     <parent link="base_link"/>
     <child link="rear_right_wheel_link"/>
     <axis xyz="0 1 0"/>
-    <limit effort="10.0" velocity="17.241379310344826"/>
+    <limit effort="10.0" velocity="17.391304347826086"/>
     <dynamics damping="0.1" friction="0.1"/>
   </joint>
   <!-- Camera Stick Joint -->
   <joint name="camera_stick_joint" type="fixed">
     <axis xyz="0 1 0"/>
-    <origin rpy="0.0 0.0 0.0" xyz="0.2735 0.01 0.005"/>
+    <origin rpy="0.0 0.0 0.0" xyz="-0.23199999999999998 0 0.069"/>
     <parent link="base_link"/>
     <child link="camera_stick_link"/>
   </joint>
   <!-- Camera Joint -->
   <joint name="camera_joint" type="fixed">
     <axis xyz="0 1 0"/>
-    <origin rpy="0 0.1 0" xyz="0.0 -0.01 0.005"/>
+    <!-- <origin xyz="0.0 ${-camera_box_size/2 - camera_stick_size/2} ${camera_height/2}" rpy="0 ${camera_pitch} 0"/> -->
     <origin rpy="0 0.1 0" xyz="0.0 0.0 0.0"/>
     <parent link="camera_stick_link"/>
     <child link="camera_link"/>
+  </joint>
+  <!-- Lidar Joint -->
+  <joint name="lidar_joint" type="fixed">
+    <axis xyz="0 1 0"/>
+    <origin rpy="0.0 0.0 0.0" xyz="0.22199999999999998 0 0.042600000000000006"/>
+    <parent link="base_link"/>
+    <child link="lidar_link"/>
   </joint>
   <!-- IMU Joint -->
   <joint name="imu_joint" type="fixed">
     <parent link="camera_link"/>
     <child link="imu_link"/>
     <origin xyz="0 0 0.01"/>
+  </joint>
+  <joint name="steering_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="steering_wheel_link"/>
+    <origin xyz="0 0 0.0"/>
   </joint>
   <!-- Gazebo Parameters -->
   <gazebo reference="base_link">
@@ -345,8 +395,8 @@
     </joint>
     <joint name="rear_left_wheel_joint">
       <command_interface name="velocity">
-        <param name="min">-17.241379310344826</param>
-        <param name="max">17.241379310344826</param>
+        <param name="min">-17.391304347826086</param>
+        <param name="max">17.391304347826086</param>
       </command_interface>
       <state_interface name="position"/>
       <state_interface name="velocity"/>
@@ -354,14 +404,14 @@
     </joint>
     <joint name="rear_right_wheel_joint">
       <command_interface name="velocity">
-        gazebo_ackermann_steering_vehicle
-        
-        <param name="min">-17.241379310344826</param>
-        <param name="max">17.241379310344826</param>
+        <param name="min">-17.391304347826086</param>
+        <param name="max">17.391304347826086</param>
       </command_interface>
       <state_interface name="position"/>
       <state_interface name="velocity"/>
       <state_interface name="effort"/>
+    </joint>
+    <joint name="steering_wheel_joint">
     </joint>
   </ros2_control>
   <!-- Gazebo Plugins -->
@@ -408,7 +458,7 @@
       <plugin filename="libgazebo_ros_camera.so" name="camera_controller">
         <alwaysOn>true</alwaysOn>
         <updateRate>0.0</updateRate>
-        <cameraName>vehicle_front_camera</cameraName>
+        <cameraName>front_camera</cameraName>
         <frameName>camera_link</frameName>
         <hackBaseline>0.07</hackBaseline>
         <distortionK1>0.0</distortionK1>
@@ -423,7 +473,7 @@
     <sensor name="imu_sensor" type="imu">
       <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
         <ros>
-          <namespace>/demo</namespace>
+          <namespace>/sensors</namespace>
           <remapping>~/out:=imu</remapping>
         </ros>
         <initial_orientation_as_reference>false</initial_orientation_as_reference>
@@ -487,6 +537,50 @@
       </imu>
     </sensor>
   </gazebo>
+  <gazebo reference="lidar_link">
+    <sensor name="lidar_sensor" type="ray">
+      <pose> 0 0 0 0 0 0 </pose>
+      <update_rate>10</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>500</samples>
+            <resolution>1</resolution>
+            <min_angle>-3.142</min_angle>
+            <max_angle>3.142</max_angle>
+          </horizontal>
+          <vertical>
+            <samples>1</samples>
+            <resolution>1</resolution>
+            <min_angle>0</min_angle>
+            <max_angle>0</max_angle>
+          </vertical>
+        </scan>
+        <range>
+          <min>0.3</min>
+          <max>40.0</max>
+          <resolution>0.001</resolution>
+        </range>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.0</stddev>
+        </noise>
+      </ray>
+      <plugin filename="libgazebo_ros_ray_sensor.so" name="gazebo_ros_laser_controller">
+        <ros>
+          <namespace>/sensors</namespace>
+          <remapping>~/out:=scan</remapping>
+        </ros>
+        <frame_name>lidar_link</frame_name>
+        <output_type>sensor_msgs/LaserScan</output_type>
+        <topic>scan</topic>
+        <min_range>0.3</min_range>
+        <max_range>40.0</max_range>
+        <gaussian_noise>0.008</gaussian_noise>
+      </plugin>
+    </sensor>
+  </gazebo>
   <gazebo>
     <plugin filename="libgazebo_ros_ackermann_drive.so" name="ackermann_plugin">
       <ros>
@@ -510,7 +604,8 @@
       <front_left_joint>front_left_wheel_joint</front_left_joint>
       <rear_right_joint>rear_right_wheel_joint</rear_right_joint>
       <rear_left_joint>rear_left_wheel_joint</rear_left_joint>
-      <wheel_separation>0.249</wheel_separation>
+      <steering_wheel_joint>steering_wheel_joint</steering_wheel_joint>
+      <wheel_separation>0.192</wheel_separation>
       <!-- output -->
       <publish_odom>true</publish_odom>
       <publish_odom_tf>true</publish_odom_tf>

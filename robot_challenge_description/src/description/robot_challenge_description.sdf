@@ -2,22 +2,22 @@
   <model name='ackermann_steering_vehicle'>
     <link name='base_link'>
       <inertial>
-        <pose>0.2735 0.005 0.0075 0 -0 0</pose>
+        <pose>-0.232 0 0.069 0 -0 0</pose>
         <mass>2e-05</mass>
         <inertia>
-          <ixx>2.00063e-06</ixx>
+          <ixx>2e-06</ixx>
           <ixy>0</ixy>
-          <ixz>0</ixz>
-          <iyy>2.00013e-06</iyy>
-          <iyz>2.5e-10</iyz>
-          <izz>2.0005e-06</izz>
+          <ixz>5.29396e-23</ixz>
+          <iyy>2e-06</iyy>
+          <iyz>0</iyz>
+          <izz>2e-06</izz>
         </inertia>
       </inertial>
       <collision name='base_link_collision'>
         <pose>0 0 0 0 -0 0</pose>
         <geometry>
           <box>
-            <size>0.557 0.249 0.241</size>
+            <size>0.474 0.192 0.138</size>
           </box>
         </geometry>
         <surface>
@@ -33,18 +33,18 @@
         </surface>
       </collision>
       <collision name='base_link_fixed_joint_lump__camera_stick_link_collision_1'>
-        <pose>0.2735 0.01 0.005 0 -0 0</pose>
+        <pose>-0.232 0 0.069 0 -0 0</pose>
         <geometry>
           <box>
-            <size>0.01 0.01 0.01</size>
+            <size>0.01 0.01 0.0254</size>
           </box>
         </geometry>
       </collision>
       <collision name='base_link_fixed_joint_lump__camera_link_collision_2'>
-        <pose>0.2735 0 0.01 0 0.1 0</pose>
+        <pose>-0.232 0 0.069 0 0.1 0</pose>
         <geometry>
           <box>
-            <size>0.01 0.01 0.01</size>
+            <size>0.0254 0.1 0.0254</size>
           </box>
         </geometry>
         <surface>
@@ -57,11 +57,28 @@
         </surface>
       </collision>
       <collision name='base_link_fixed_joint_lump__imu_link_collision_3'>
-        <pose>0.274498 0 0.01995 0 0.1 0</pose>
+        <pose>-0.231002 0 0.07895 0 0.1 0</pose>
         <geometry>
           <box>
-            <size>0.1 0.1 0.1</size>
+            <size>0.0254 0.1 0.0254</size>
           </box>
+        </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <collision name='base_link_fixed_joint_lump__lidar_link_collision_4'>
+        <pose>0.222 0 0.0426 0 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.0528</length>
+            <radius>0.0325</radius>
+          </cylinder>
         </geometry>
         <surface>
           <contact>
@@ -76,32 +93,41 @@
         <pose>0 0 0 0 -0 0</pose>
         <geometry>
           <box>
-            <size>0.557 0.249 0.241</size>
+            <size>0.474 0.192 0.138</size>
           </box>
         </geometry>
       </visual>
       <visual name='base_link_fixed_joint_lump__camera_stick_link_visual_1'>
-        <pose>0.2735 0.01 0.005 0 -0 0</pose>
+        <pose>-0.232 0 0.069 0 -0 0</pose>
         <geometry>
           <box>
-            <size>0.01 0.01 0.01</size>
+            <size>0.01 0.01 0.0254</size>
           </box>
         </geometry>
       </visual>
       <visual name='base_link_fixed_joint_lump__camera_link_visual_2'>
-        <pose>0.2735 0 0.01 0 0.1 0</pose>
+        <pose>-0.232 0 0.069 0 0.1 0</pose>
         <geometry>
           <box>
-            <size>0.01 0.01 0.01</size>
+            <size>0.0254 0.1 0.0254</size>
           </box>
         </geometry>
       </visual>
       <visual name='base_link_fixed_joint_lump__imu_link_visual_3'>
-        <pose>0.274498 0 0.01995 0 0.1 0</pose>
+        <pose>-0.231002 0 0.07895 0 0.1 0</pose>
         <geometry>
           <box>
-            <size>0.1 0.1 0.1</size>
+            <size>0.0254 0.1 0.0254</size>
           </box>
+        </geometry>
+      </visual>
+      <visual name='base_link_fixed_joint_lump__lidar_link_visual_4'>
+        <pose>0.222 0 0.0426 0 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.0528</length>
+            <radius>0.0325</radius>
+          </cylinder>
         </geometry>
       </visual>
       <sensor name='vehicle_front_camera' type='camera'>
@@ -128,7 +154,7 @@
         <plugin name='camera_controller' filename='libgazebo_ros_camera.so'>
           <alwaysOn>1</alwaysOn>
           <updateRate>0.0</updateRate>
-          <cameraName>vehicle_front_camera</cameraName>
+          <cameraName>front_camera</cameraName>
           <frameName>camera_link</frameName>
           <hackBaseline>0.07</hackBaseline>
           <distortionK1>0.0</distortionK1>
@@ -137,12 +163,12 @@
           <distortionT1>0.0</distortionT1>
           <distortionT2>0.0</distortionT2>
         </plugin>
-        <pose>0.2735 0 0.01 0 0.1 0</pose>
+        <pose>-0.232 0 0.069 0 0.1 0</pose>
       </sensor>
       <sensor name='imu_sensor' type='imu'>
         <plugin name='imu_plugin' filename='libgazebo_ros_imu_sensor.so'>
           <ros>
-            <namespace>/demo</namespace>
+            <namespace>/sensors</namespace>
             <remapping>~/out:=imu</remapping>
           </ros>
           <initial_orientation_as_reference>0</initial_orientation_as_reference>
@@ -204,11 +230,53 @@
             </z>
           </linear_acceleration>
         </imu>
-        <pose>0.274498 0 0.01995 0 0.1 0</pose>
+        <pose>-0.231002 0 0.07895 0 0.1 0</pose>
+      </sensor>
+      <sensor name='lidar_sensor' type='ray'>
+        <update_rate>10</update_rate>
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>500</samples>
+              <resolution>1</resolution>
+              <min_angle>-3.142</min_angle>
+              <max_angle>3.142</max_angle>
+            </horizontal>
+            <vertical>
+              <samples>1</samples>
+              <resolution>1</resolution>
+              <min_angle>0</min_angle>
+              <max_angle>0</max_angle>
+            </vertical>
+          </scan>
+          <range>
+            <min>0.3</min>
+            <max>40</max>
+            <resolution>0.001</resolution>
+          </range>
+          <noise>
+            <type>gaussian</type>
+            <mean>0</mean>
+            <stddev>0</stddev>
+          </noise>
+        </ray>
+        <plugin name='gazebo_ros_laser_controller' filename='libgazebo_ros_ray_sensor.so'>
+          <ros>
+            <namespace>/sensors</namespace>
+            <remapping>~/out:=scan</remapping>
+          </ros>
+          <frame_name>lidar_link</frame_name>
+          <output_type>sensor_msgs/LaserScan</output_type>
+          <topic>scan</topic>
+          <min_range>0.3</min_range>
+          <max_range>40.0</max_range>
+          <gaussian_noise>0.008</gaussian_noise>
+        </plugin>
+        <pose>0.222 0 0.0426 0 -0 0</pose>
       </sensor>
     </link>
     <joint name='front_left_steering_joint' type='revolute'>
-      <pose relative_to='base_link'>0.2205 0.1495 -0.029 0 -0 0</pose>
+      <pose relative_to='base_link'>0.1795 0.13 -0.069 0 -0 0</pose>
       <parent>base_link</parent>
       <child>front_left_steering_link</child>
       <axis>
@@ -268,7 +336,7 @@
         <xyz>0 1 0</xyz>
         <limit>
           <effort>10</effort>
-          <velocity>17.2414</velocity>
+          <velocity>17.3913</velocity>
           <lower>-1e+16</lower>
           <upper>1e+16</upper>
         </limit>
@@ -284,22 +352,22 @@
       <pose relative_to='front_left_wheel_joint'>0 0 0 0 -0 0</pose>
       <inertial>
         <pose>0 0 0 1.57079 -0 0</pose>
-        <mass>0.528416</mass>
+        <mass>0.706309</mass>
         <inertia>
-          <ixx>0.000554484</ixx>
+          <ixx>0.000855972</ixx>
           <ixy>0</ixy>
           <ixz>0</ixz>
-          <iyy>0.000554484</iyy>
+          <iyy>0.000855972</iyy>
           <iyz>0</iyz>
-          <izz>0.000888796</izz>
+          <izz>0.00116762</izz>
         </inertia>
       </inertial>
       <collision name='front_left_wheel_link_collision'>
         <pose>0 0 0 1.57079 -0 0</pose>
         <geometry>
           <cylinder>
-            <length>0.05</length>
-            <radius>0.058</radius>
+            <length>0.068</length>
+            <radius>0.0575</radius>
           </cylinder>
         </geometry>
         <surface>
@@ -318,14 +386,14 @@
         <pose>0 0 0 1.57079 -0 0</pose>
         <geometry>
           <cylinder>
-            <length>0.05</length>
-            <radius>0.058</radius>
+            <length>0.068</length>
+            <radius>0.0575</radius>
           </cylinder>
         </geometry>
       </visual>
     </link>
     <joint name='front_right_steering_joint' type='revolute'>
-      <pose relative_to='base_link'>0.2205 -0.1495 -0.029 0 -0 0</pose>
+      <pose relative_to='base_link'>0.1795 -0.13 -0.069 0 -0 0</pose>
       <parent>base_link</parent>
       <child>front_right_steering_link</child>
       <axis>
@@ -385,7 +453,7 @@
         <xyz>0 1 0</xyz>
         <limit>
           <effort>10</effort>
-          <velocity>17.2414</velocity>
+          <velocity>17.3913</velocity>
           <lower>-1e+16</lower>
           <upper>1e+16</upper>
         </limit>
@@ -401,22 +469,22 @@
       <pose relative_to='front_right_wheel_joint'>0 0 0 0 -0 0</pose>
       <inertial>
         <pose>0 0 0 1.57079 -0 0</pose>
-        <mass>0.528416</mass>
+        <mass>0.706309</mass>
         <inertia>
-          <ixx>0.000554484</ixx>
+          <ixx>0.000855972</ixx>
           <ixy>0</ixy>
           <ixz>0</ixz>
-          <iyy>0.000554484</iyy>
+          <iyy>0.000855972</iyy>
           <iyz>0</iyz>
-          <izz>0.000888796</izz>
+          <izz>0.00116762</izz>
         </inertia>
       </inertial>
       <collision name='front_right_wheel_link_collision'>
         <pose>0 0 0 1.57079 -0 0</pose>
         <geometry>
           <cylinder>
-            <length>0.05</length>
-            <radius>0.058</radius>
+            <length>0.068</length>
+            <radius>0.0575</radius>
           </cylinder>
         </geometry>
         <surface>
@@ -435,21 +503,21 @@
         <pose>0 0 0 1.57079 -0 0</pose>
         <geometry>
           <cylinder>
-            <length>0.05</length>
-            <radius>0.058</radius>
+            <length>0.068</length>
+            <radius>0.0575</radius>
           </cylinder>
         </geometry>
       </visual>
     </link>
     <joint name='rear_left_wheel_joint' type='revolute'>
-      <pose relative_to='base_link'>-0.2205 0.1495 -0.029 0 -0 0</pose>
+      <pose relative_to='base_link'>-0.1795 0.13 -0.069 0 -0 0</pose>
       <parent>base_link</parent>
       <child>rear_left_wheel_link</child>
       <axis>
         <xyz>0 1 0</xyz>
         <limit>
           <effort>10</effort>
-          <velocity>17.2414</velocity>
+          <velocity>17.3913</velocity>
           <lower>-1e+16</lower>
           <upper>1e+16</upper>
         </limit>
@@ -467,20 +535,20 @@
         <pose>0 0 0 1.57079 -0 0</pose>
         <mass>2</mass>
         <inertia>
-          <ixx>0.000554484</ixx>
+          <ixx>0.000855972</ixx>
           <ixy>0</ixy>
           <ixz>0</ixz>
-          <iyy>0.000554484</iyy>
+          <iyy>0.000855972</iyy>
           <iyz>0</iyz>
-          <izz>0.000888796</izz>
+          <izz>0.00116762</izz>
         </inertia>
       </inertial>
       <collision name='rear_left_wheel_link_collision'>
         <pose>0 0 0 1.57079 -0 0</pose>
         <geometry>
           <cylinder>
-            <length>0.05</length>
-            <radius>0.058</radius>
+            <length>0.068</length>
+            <radius>0.0575</radius>
           </cylinder>
         </geometry>
         <surface>
@@ -499,21 +567,21 @@
         <pose>0 0 0 1.57079 -0 0</pose>
         <geometry>
           <cylinder>
-            <length>0.05</length>
-            <radius>0.058</radius>
+            <length>0.068</length>
+            <radius>0.0575</radius>
           </cylinder>
         </geometry>
       </visual>
     </link>
     <joint name='rear_right_wheel_joint' type='revolute'>
-      <pose relative_to='base_link'>-0.2205 -0.1495 -0.029 0 -0 0</pose>
+      <pose relative_to='base_link'>-0.1795 -0.13 -0.069 0 -0 0</pose>
       <parent>base_link</parent>
       <child>rear_right_wheel_link</child>
       <axis>
         <xyz>0 1 0</xyz>
         <limit>
           <effort>10</effort>
-          <velocity>17.2414</velocity>
+          <velocity>17.3913</velocity>
           <lower>-1e+16</lower>
           <upper>1e+16</upper>
         </limit>
@@ -531,20 +599,20 @@
         <pose>0 0 0 1.57079 -0 0</pose>
         <mass>2</mass>
         <inertia>
-          <ixx>0.000554484</ixx>
+          <ixx>0.000855972</ixx>
           <ixy>0</ixy>
           <ixz>0</ixz>
-          <iyy>0.000554484</iyy>
+          <iyy>0.000855972</iyy>
           <iyz>0</iyz>
-          <izz>0.000888796</izz>
+          <izz>0.00116762</izz>
         </inertia>
       </inertial>
       <collision name='rear_right_wheel_link_collision'>
         <pose>0 0 0 1.57079 -0 0</pose>
         <geometry>
           <cylinder>
-            <length>0.05</length>
-            <radius>0.058</radius>
+            <length>0.068</length>
+            <radius>0.0575</radius>
           </cylinder>
         </geometry>
         <surface>
@@ -563,8 +631,8 @@
         <pose>0 0 0 1.57079 -0 0</pose>
         <geometry>
           <cylinder>
-            <length>0.05</length>
-            <radius>0.058</radius>
+            <length>0.068</length>
+            <radius>0.0575</radius>
           </cylinder>
         </geometry>
       </visual>
@@ -595,7 +663,8 @@
       <front_left_joint>front_left_wheel_joint</front_left_joint>
       <rear_right_joint>rear_right_wheel_joint</rear_right_joint>
       <rear_left_joint>rear_left_wheel_joint</rear_left_joint>
-      <wheel_separation>0.249</wheel_separation>
+      <steering_wheel_joint>steering_wheel_joint</steering_wheel_joint>
+      <wheel_separation>0.192</wheel_separation>
       <publish_odom>1</publish_odom>
       <publish_odom_tf>1</publish_odom_tf>
       <publish_wheel_tf>1</publish_wheel_tf>

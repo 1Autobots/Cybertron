@@ -7,12 +7,13 @@
   https://github.com/lucasmazzetto/gazebo_ackermann_steering_vehicle/blob/main/model/vehicle.xacro
   -->
   <!-- Arguments -->
-  <xacro:arg name="body_length" default=".557" />
-  <xacro:arg name="body_width" default=".249" />
-  <xacro:arg name="body_height" default="0.241" />
+  <xacro:arg name="body_length" default=".474" />
+  <xacro:arg name="body_width" default=".192" />
+  <xacro:arg name="body_height" default="0.138" />
   <xacro:arg name="body_density" default="1000.0" />
-  <xacro:arg name="wheel_radius" default="0.058" />
-  <xacro:arg name="wheel_width" default="0.05" />
+  <xacro:arg name="wheel_radius" default="0.0575" />
+  <xacro:arg name="wheel_width" default="0.068" />
+  <xacro:arg name="wheel_base" default="0.275" />
   <xacro:arg name="wheel_density" default="1000.0" />
   <xacro:arg name="max_steering_angle" default="0.6108" />
   <xacro:arg name="max_steering_angular_velocity" default="1.570796" />
@@ -21,12 +22,20 @@
   <xacro:arg name="max_effort" default="10.0" />
   <xacro:arg name="camera_box_size" default="0.01" />
   <xacro:arg name="camera_stick_size" default="0.01" />
-  <xacro:arg name="camera_height" default=".01" />
+  <!-- <xacro:arg name="camera_height" default=".01" /> -->
   <xacro:arg name="camera_pitch" default="0.1" />
   <xacro:arg name="camera_fov" default="1.570796" />
   <xacro:arg name="camera_fps" default="30" />
   <xacro:arg name="image_width" default="640" />
   <xacro:arg name="image_height" default="480" />
+
+
+  <!-- <xacro:arg name="camera_length" default=".0254" />
+  <xacro:arg name="camera_width" default=".10" />
+  <xacro:arg name="camera_height" default="0.0254" />
+  <xacro:arg name="lidar_length" default=".10" />
+  <xacro:arg name="lidar_width" default=".10" />
+  <xacro:arg name="lidar_height" default="0.10" /> -->
 
   <!-- Mathematical Constants -->
   <xacro:property name="PI" value="3.14159265"/>
@@ -64,6 +73,13 @@
   <xacro:property name="wheel_inertia_y" value="${1.0/12.0 * wheel_mass * (3*wheel_radius*wheel_radius + wheel_width*wheel_width)}"/>
   <xacro:property name="wheel_inertia_z" value="${1.0/2.0 * wheel_mass * wheel_radius * wheel_radius}"/>
   <xacro:property name="max_wheel_angular_velocity" value="${max_velocity / wheel_radius}"/>
+  
+  <xacro:property name="camera_length" value=".0254" />
+  <xacro:property name="camera_width" value=".10" />
+  <xacro:property name="camera_height" value="0.0254" />
+  <xacro:property name="lidar_radius" value=".0325" />
+  <xacro:property name="lidar_height" value="0.0528" />
+
 
   <!-- Macros -->
   <xacro:macro name="box_inertia" params="m x y z">
@@ -71,6 +87,26 @@
   </xacro:macro>
 
 
+  <!-- Materials -->
+  <material name="gray_25">
+    <color rgba="0.25 0.25 0.25 1.0"/>
+  </material>
+
+  <material name="gray_50">
+    <color rgba="0.50 0.50 0.50 1.0"/>
+  </material>
+
+  <material name="gray_75">
+    <color rgba="0.75 0.75 0.75 1.0"/>
+  </material>
+
+  <material name="camera_color">
+    <color rgba="0.70 0.2 0.2 1.0"/>
+  </material>
+
+  <material name="lidar_color">
+    <color rgba="0.2 0.7 0.2 1.0"/>
+  </material>
   <!-- Links -->
 
   <!-- Body Link -->
@@ -80,9 +116,7 @@
       <geometry>
         <box size="${body_length} ${body_width} ${body_height}"/>
       </geometry>
-      <material name="body_material">
-        <color rgba="0.25 0.25 0.25 1.0"/>
-      </material>
+      <material name="gray_25"/>
     </visual>
     <collision>
       <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
@@ -268,19 +302,17 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <box size="${camera_box_size} ${camera_box_size} ${camera_box_size}"/>
+        <box size="${camera_length} ${camera_width} ${camera_height}"/>
       </geometry>
     </collision>
 
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <box size="${camera_box_size} ${camera_box_size} ${camera_box_size}"/>
+        <box size="${camera_length} ${camera_width} ${camera_height}"/>
       </geometry>
 
-      <material name="camera_material">
-        <color rgba="0.0 0.0 0.0 1.0"/>
-      </material>
+      <material name="camera_color" />
     </visual>
 
     <inertial>
@@ -290,28 +322,51 @@
     </inertial>
   </link>
 
-  <!-- IMU Link -->
-  <link name="imu_link">
-    <visual>
-      <geometry>
-        <box size="0.1 0.1 0.1"/>
-      </geometry>
-    </visual>
-  
+  <!-- Lidar Link -->
+  <link name="lidar_link">
     <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <box size="0.1 0.1 0.1"/>
+        <cylinder radius="${lidar_radius}" length="${lidar_height}"/>
       </geometry>
     </collision>
 
-    <xacro:box_inertia m="0.1" x="0.1" y="0.1" z="0.1"/>  
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="${lidar_radius}" length="${lidar_height}"/>
+      </geometry>
+      <material name="lidar_color"/>
+    </visual>
+  </link>
+
+  <!-- IMU Link -->
+  <link name="imu_link">
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="${camera_length} ${camera_width} ${camera_height}"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="${camera_length} ${camera_width} ${camera_height}"/>
+      </geometry>
+    </visual>
+
+    <xacro:box_inertia m="0.1" x="0.1" y="0.1" z="0.1"/>
+  </link>
+
+  <link name="steering_wheel_link">
   </link>
 
   <!-- Joints -->
 
   <!-- Front Left Steering Joint -->
   <joint name="front_left_steering_joint" type="revolute">
-    <origin xyz="${wheel_offset} ${wheel_separation/2} -${wheel_radius/2}" rpy="0 0 0"/>
+    <origin xyz="${wheel_offset} ${wheel_separation/2} -${body_height/2}" rpy="0 0 0"/>
     <parent link="base_link"/>
     <child link="front_left_steering_link"/>
     <axis xyz="0 0 1"/>
@@ -331,7 +386,7 @@
 
   <!-- Front Right Steering Joint -->
   <joint name="front_right_steering_joint" type="revolute">
-    <origin xyz="${wheel_offset} ${-wheel_separation/2} -${wheel_radius/2}" rpy="0 0 0"/>
+    <origin xyz="${wheel_offset} ${-wheel_separation/2} -${body_height/2}" rpy="0 0 0"/>
     <parent link="base_link"/>
     <child link="front_right_steering_link"/>
     <axis xyz="0 0 1"/>
@@ -351,7 +406,7 @@
 
   <!-- Rear Left Wheel Joint -->
   <joint name="rear_left_wheel_joint" type="continuous">
-    <origin xyz="-${wheel_offset} ${wheel_separation/2} -${wheel_radius/2}" rpy="0 0 0"/>
+    <origin xyz="-${wheel_offset} ${wheel_separation/2} -${body_height/2}" rpy="0 0 0"/>
     <parent link="base_link"/>
     <child link="rear_left_wheel_link"/>
     <axis xyz="0 1 0"/>
@@ -361,7 +416,7 @@
 
   <!-- Rear Right Wheel Joint -->
   <joint name="rear_right_wheel_joint" type="continuous">
-    <origin xyz="-${wheel_offset} ${-wheel_separation/2} -${wheel_radius/2}" rpy="0 0 0"/>
+    <origin xyz="-${wheel_offset} ${-wheel_separation/2} -${body_height/2}" rpy="0 0 0"/>
     <parent link="base_link"/>
     <child link="rear_right_wheel_link"/>
     <axis xyz="0 1 0"/>
@@ -372,7 +427,7 @@
   <!-- Camera Stick Joint -->
   <joint name="camera_stick_joint" type="fixed">
     <axis xyz="0 1 0" />
-    <origin xyz="${body_length/2 - camera_stick_size/2} ${camera_box_size/2 + camera_stick_size/2} ${camera_height/2}" rpy="0.0 0.0 0.0"/>
+    <origin xyz="-${body_length/2 - camera_stick_size/2} 0 ${body_height/2}" rpy="0.0 0.0 0.0"/>
     <parent link="base_link"/>
     <child link="camera_stick_link"/>
   </joint>
@@ -380,10 +435,18 @@
   <!-- Camera Joint -->
   <joint name="camera_joint" type="fixed">
     <axis xyz="0 1 0" />
-    <origin xyz="0.0 ${-camera_box_size/2 - camera_stick_size/2} ${camera_height/2}" rpy="0 ${camera_pitch} 0"/>
+    <!-- <origin xyz="0.0 ${-camera_box_size/2 - camera_stick_size/2} ${camera_height/2}" rpy="0 ${camera_pitch} 0"/> -->
     <origin xyz="0.0 0.0 0.0" rpy="0 ${camera_pitch} 0"/>
     <parent link="camera_stick_link"/>
     <child link="camera_link"/>
+  </joint>
+
+  <!-- Lidar Joint -->
+  <joint name="lidar_joint" type="fixed">
+    <axis xyz="0 1 0"/>
+    <origin xyz="${body_length/2 - 0.015} 0 ${body_height/2 - lidar_height/2}" rpy="0.0 0.0 0.0"/>
+    <parent link="base_link"/>
+    <child link="lidar_link"/>
   </joint>
 
   <!-- IMU Joint -->
@@ -392,7 +455,12 @@
     <child link="imu_link"/>
     <origin xyz="0 0 0.01"/>  
   </joint>
-
+  
+  <joint name="steering_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="steering_wheel_link"/>
+    <origin xyz="0 0 0.0"/>
+  </joint>
   <!-- Gazebo Parameters -->
   <gazebo reference="base_link">
     <mu1>0.0001</mu1>
@@ -459,7 +527,7 @@
     </joint>
 
     <joint name="rear_right_wheel_joint">
-      <command_interface name="velocity">gazebo_ackermann_steering_vehicle
+      <command_interface name="velocity">
         <param name="min">${-max_wheel_angular_velocity}</param>
         <param name="max">${max_wheel_angular_velocity}</param>
       </command_interface>
@@ -467,6 +535,9 @@
       <state_interface name="position"/>
       <state_interface name="velocity"/>
       <state_interface name="effort"/>
+    </joint>
+
+    <joint name="steering_wheel_joint">
     </joint>
   </ros2_control>
 
@@ -518,7 +589,7 @@
       <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
         <alwaysOn>true</alwaysOn>
         <updateRate>0.0</updateRate>
-        <cameraName>vehicle_front_camera</cameraName>
+        <cameraName>front_camera</cameraName>
         <frameName>camera_link</frameName>
         <hackBaseline>0.07</hackBaseline>
         <distortionK1>0.0</distortionK1>
@@ -534,7 +605,7 @@
   <sensor name="imu_sensor" type="imu">
    <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
       <ros>
-        <namespace>/demo</namespace>
+        <namespace>/sensors</namespace>
         <remapping>~/out:=imu</remapping>
       </ros>
       <initial_orientation_as_reference>false</initial_orientation_as_reference>
@@ -599,6 +670,55 @@
   </sensor>
 </gazebo>
 
+<gazebo reference="lidar_link">
+  <sensor name="lidar_sensor" type="ray">
+    <pose> 0 0 0 0 0 0 </pose>
+    <update_rate>10</update_rate>
+    <ray>
+      <scan>
+          <horizontal>
+              <samples>500</samples>
+              <resolution>1</resolution>
+              <min_angle>-3.142</min_angle>
+              <max_angle>3.142</max_angle>
+          </horizontal>
+          <vertical>
+              <samples>1</samples>
+              <resolution>1</resolution>
+              <min_angle>0</min_angle>
+              <max_angle>0</max_angle>
+          </vertical>
+      </scan>
+
+      <range>
+          <min>0.3</min>
+          <max>40.0</max>
+          <resolution>0.001</resolution>
+      </range>
+
+      <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.0</stddev>
+      </noise>
+    </ray>
+    <plugin name="gazebo_ros_laser_controller" filename="libgazebo_ros_ray_sensor.so">
+      <ros>
+        <namespace>/sensors</namespace>
+        <remapping>~/out:=scan</remapping>
+      </ros>
+
+      <frame_name>lidar_link</frame_name>
+      <output_type>sensor_msgs/LaserScan</output_type>
+      <topic>scan</topic>
+      <min_range>0.3</min_range>
+      <max_range>40.0</max_range>
+      <gaussian_noise>0.008</gaussian_noise>
+    </plugin>
+  </sensor>
+
+</gazebo>
+
 <gazebo>
   <plugin filename="libgazebo_ros_ackermann_drive.so" name="ackermann_plugin">
     <ros>
@@ -626,6 +746,8 @@
     <front_left_joint>front_left_wheel_joint</front_left_joint>
     <rear_right_joint>rear_right_wheel_joint</rear_right_joint>
     <rear_left_joint>rear_left_wheel_joint</rear_left_joint>
+
+    <steering_wheel_joint>steering_wheel_joint</steering_wheel_joint>
 
     <wheel_separation>${body_width}</wheel_separation>
 
