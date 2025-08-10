@@ -7,21 +7,21 @@
   https://github.com/lucasmazzetto/gazebo_ackermann_steering_vehicle/blob/main/model/vehicle.xacro
   -->
   <!-- Arguments -->
-  <xacro:arg name="body_length" default="2.0" />
-  <xacro:arg name="body_width" default="1.0" />
-  <xacro:arg name="body_height" default="0.5" />
+  <xacro:arg name="body_length" default=".557" />
+  <xacro:arg name="body_width" default=".249" />
+  <xacro:arg name="body_height" default="0.241" />
   <xacro:arg name="body_density" default="1000.0" />
-  <xacro:arg name="wheel_radius" default="0.3" />
-  <xacro:arg name="wheel_width" default="0.1" />
+  <xacro:arg name="wheel_radius" default="0.058" />
+  <xacro:arg name="wheel_width" default="0.05" />
   <xacro:arg name="wheel_density" default="1000.0" />
   <xacro:arg name="max_steering_angle" default="0.6108" />
   <xacro:arg name="max_steering_angular_velocity" default="1.570796" />
   <xacro:arg name="max_steering_effort" default="1.0" />
   <xacro:arg name="max_velocity" default="1.0" />
   <xacro:arg name="max_effort" default="10.0" />
-  <xacro:arg name="camera_box_size" default="0.1" />
-  <xacro:arg name="camera_stick_size" default="0.2" />
-  <xacro:arg name="camera_height" default="1.5" />
+  <xacro:arg name="camera_box_size" default="0.01" />
+  <xacro:arg name="camera_stick_size" default="0.01" />
+  <xacro:arg name="camera_height" default=".01" />
   <xacro:arg name="camera_pitch" default="0.1" />
   <xacro:arg name="camera_fov" default="1.570796" />
   <xacro:arg name="camera_fps" default="30" />

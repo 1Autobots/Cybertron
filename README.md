@@ -21,10 +21,10 @@ gazebo test.sdf
 To convert the urdf (with xacro macros) to a urdf that can be used in other locations.
 This is required for the joint_state_publisher
 ```bash
-xacro -o robot_challenge_description.urdf robot_challenge_description.xacro 
+xacro -o src/description/robot_challenge_description.urdf src/description/robot_challenge_description.xacro 
 ```
 
 To convert the urdf (without xacro macro) to an sdf for gazebo
 ```bash
-gz sdf -p robot_challenge_description.urdf > robot_challenge_description.sdf
+gz sdf -p src/description/robot_challenge_description.urdf > src/description/robot_challenge_description.sdf
 ```
