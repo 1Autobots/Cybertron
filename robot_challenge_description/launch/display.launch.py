@@ -22,7 +22,7 @@ def generate_launch_description():
         executable='joint_state_publisher',
         name='joint_state_publisher',
         arguments=[default_model_path], #Add this line
-        parameters=[{'robot_description': Command(['xacro ', default_model_path])}],
+        #parameters=[{'description_file': Command(['xacro ', default_model_path])}],
         #condition=UnlessCondition(LaunchConfiguration('gui'))
     )
     joint_state_publisher_gui_node = Node(
