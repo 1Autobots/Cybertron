@@ -14,7 +14,10 @@
         "-e", "TERM", 
         "-v", "/tmp/.X11-unix:/tmp/.X11-unix",
         "-v", "${localEnv:XAUTHORITY}:/tmp/.Xauthority",
-        "-h", "${localEnv:HOSTNAME}-docker"
+        "-h", "${localEnv:HOSTNAME}-docker",
+        "--runtime", "nvidia",
+        "--gpus", "all",
+        "-e", "NVIDIA_DRIVER_CAPABILITIES=all"
     ],
     "remoteUser": "${localEnv:USER}"
 }

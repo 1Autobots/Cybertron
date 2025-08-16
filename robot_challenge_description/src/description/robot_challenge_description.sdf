@@ -73,7 +73,7 @@
         </surface>
       </collision>
       <collision name='base_link_fixed_joint_lump__lidar_link_collision_4'>
-        <pose>0.222 0 0.0426 0 -0 0</pose>
+        <pose>0.237 0 0.0426 0 -0 0</pose>
         <geometry>
           <cylinder>
             <length>0.0528</length>
@@ -122,7 +122,7 @@
         </geometry>
       </visual>
       <visual name='base_link_fixed_joint_lump__lidar_link_visual_4'>
-        <pose>0.222 0 0.0426 0 -0 0</pose>
+        <pose>0.237 0 0.0426 0 -0 0</pose>
         <geometry>
           <cylinder>
             <length>0.0528</length>
@@ -232,8 +232,9 @@
         </imu>
         <pose>-0.231002 0 0.07895 0 0.1 0</pose>
       </sensor>
-      <sensor name='lidar_sensor' type='ray'>
+      <sensor name='lidar_sensor' type='gpu_lidar'>
         <update_rate>10</update_rate>
+        <visualize>1</visualize>
         <ray>
           <scan>
             <horizontal>
@@ -271,8 +272,10 @@
           <min_range>0.3</min_range>
           <max_range>40.0</max_range>
           <gaussian_noise>0.008</gaussian_noise>
+          <always_on>1</always_on>
+          <render_engine>ogre2</render_engine>
         </plugin>
-        <pose>0.222 0 0.0426 0 -0 0</pose>
+        <pose>0.237 0 0.0426 0 -0 0</pose>
       </sensor>
     </link>
     <joint name='front_left_steering_joint' type='revolute'>

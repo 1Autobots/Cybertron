@@ -444,7 +444,7 @@
   <!-- Lidar Joint -->
   <joint name="lidar_joint" type="fixed">
     <axis xyz="0 1 0"/>
-    <origin xyz="${body_length/2 - 0.015} 0 ${body_height/2 - lidar_height/2}" rpy="0.0 0.0 0.0"/>
+    <origin xyz="${body_length/2} 0 ${body_height/2 - lidar_height/2}" rpy="0.0 0.0 0.0"/>
     <parent link="base_link"/>
     <child link="lidar_link"/>
   </joint>
@@ -671,9 +671,10 @@
 </gazebo>
 
 <gazebo reference="lidar_link">
-  <sensor name="lidar_sensor" type="ray">
+  <sensor name="lidar_sensor" type="gpu_lidar">
     <pose> 0 0 0 0 0 0 </pose>
     <update_rate>10</update_rate>
+    <visualize>true</visualize>
     <ray>
       <scan>
           <horizontal>
@@ -714,6 +715,8 @@
       <min_range>0.3</min_range>
       <max_range>40.0</max_range>
       <gaussian_noise>0.008</gaussian_noise>
+      <always_on>1</always_on>
+      <render_engine>ogre2</render_engine>
     </plugin>
   </sensor>
 
