@@ -37,11 +37,13 @@ RUN apt-get update --fix-missing && \
                        python3-colcon-common-extensions \
                        python3-rosdep \
                        ros-humble-slam-toolbox \
-                       ros-humble-navigation2 \ 
+                       ros-humble-navigation2 \
                        ros-humble-nav2-bringup \
-                       ros-humble-turtlebot3-gazebo \
+#                       ros-humble-turtlebot3-gazebo \
+                       ros-humble-ros-gz \
                        ros-humble-joint-state-publisher-gui \
                        ros-humble-xacro \
+                       ros-humble-ros2-control \
                        ros-humble-gz-ros2-control \
                        libgz-sensors6-dev \
                     #    ros-humble-turtlebot3-messages 

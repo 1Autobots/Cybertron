@@ -29,12 +29,27 @@
   <!-- Links -->
   <!-- Body Link -->
   <link name="base_link">
+    <!-- <visual>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+      <geometry>
+        <box size="${body_length} ${body_width} ${body_height}"/>
+      </geometry>
+      <material name="gray_25"/>
+    </visual>
+    <collision>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+      <geometry>
+        <box size="${body_length} ${body_width} ${body_height}"/>
+      </geometry>
+    </collision> -->
+  </link>
+  <link name="body_link">
     <visual>
       <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
       <geometry>
         <box size="0.474 0.192 0.138"/>
       </geometry>
-      <material name="gray_25"/>
+      <material name="gray_75"/>
     </visual>
     <collision>
       <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
@@ -42,6 +57,7 @@
         <box size="0.474 0.192 0.138"/>
       </geometry>
     </collision>
+    <inertia ixx="13.976999999999999" ixy="0" ixz="0" iyy="60.93" iyz="0" izz="60.93"/>
   </link>
   <!-- Front Left Wheel -->
   <link name="front_left_wheel_link">
@@ -258,8 +274,18 @@
     <inertia ixx="0.00016666666666666672" ixy="0" ixz="0" iyy="0.00016666666666666672" iyz="0" izz="0.00016666666666666672"/>
   </link>
   <link name="steering_wheel_link">
+    <inertial>
+      <mass value="1e-5"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/>
+    </inertial>
   </link>
   <!-- Joints -->
+  <joint name="body_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="body_link"/>
+  </joint>
   <!-- Front Left Steering Joint -->
   <joint name="front_left_steering_joint" type="revolute">
     <origin rpy="0 0 0" xyz="0.1795 0.13 -0.069"/>
@@ -354,8 +380,6 @@
   </gazebo>
   <gazebo reference="front_right_wheel_link">
     <mu1>100.0</mu1>
-    gazebo_ackermann_steering_vehicle
-    
     <mu2>100.0</mu2>
   </gazebo>
   <gazebo reference="front_left_wheel_link">
@@ -371,7 +395,7 @@
     <mu2>100.0</mu2>
   </gazebo>
   <!-- Gazebo Control -->
-  <ros2_control name="control" type="system">
+  <ros2_control name="GazeboSimSystem" type="system">
     <hardware>
       <plugin>gz_ros2_control/GazeboSimSystem</plugin>
     </hardware>
@@ -416,7 +440,7 @@
   </ros2_control>
   <!-- Gazebo Plugins -->
   <gazebo>
-    <plugin filename="libgazebo_ros_joint_state_publisher.so" name="gz::sim::systems::JointStatePublisher">
+    <!-- <plugin filename="libgazebo_ros_joint_state_publisher.so" name="gz::sim::systems::JointStatePublisher">
       <topic>joint_states</topic>
       <joint_name>front_left_steering_joint</joint_name>
       <joint_name>front_right_steering_joint</joint_name>
@@ -424,8 +448,30 @@
       <joint_name>front_right_wheel_joint</joint_name>
       <joint_name>rear_left_wheel_joint</joint_name>
       <joint_name>rear_right_wheel_joint</joint_name>
+    </plugin> -->
+    <plugin filename="libignition-gazebo-ackermann-steering-system" name="ignition::gazebo::systems::AckermannSteering">
+      <left_joint>front_left_wheel_joint</left_joint>
+      <left_joint>rear_left_wheel_joint</left_joint>
+      <right_joint>front_right_wheel_joint</right_joint>
+      <right_joint>rear_right_wheel_joint</right_joint>
+      <left_steering_joint>front_left_steering_joint</left_steering_joint>
+      <right_steering_joint>front_right_steering_joint</right_steering_joint>
+      <kingpin_width>1.0</kingpin_width>
+      <steering_limit>0.5</steering_limit>
+      <wheel_base>1.0</wheel_base>
+      <wheel_separation>1.25</wheel_separation>
+      <wheel_radius>0.3</wheel_radius>
+      <min_velocity>-1</min_velocity>
+      <max_velocity>1</max_velocity>
+      <min_acceleration>-3</min_acceleration>
+      <max_acceleration>3</max_acceleration>
+      <topic>cmd_vel</topic>
     </plugin>
-    <plugin filename="libgz_ros2_control-system.so" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+    <plugin filename="libignition-gazebo-joint-state-publisher-system.so" name="ignition::gazebo::systems::JointStatePublisher">
+      <topic>joint_states</topic>
+      <update_rate>100</update_rate>
+    </plugin>
+    <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
       <parameters>/workspaces/Cybertron/robot_challenge_description/install/robot_challenge_description/share/robot_challenge_description/config/gz_ros2_control.yaml</parameters>
     </plugin>
     <!-- <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
@@ -455,7 +501,7 @@
           <stddev>0.007</stddev>
         </noise>
       </camera>
-      <plugin filename="libgazebo_ros_camera.so" name="camera_controller">
+      <!-- <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
         <alwaysOn>true</alwaysOn>
         <updateRate>0.0</updateRate>
         <cameraName>front_camera</cameraName>
@@ -466,18 +512,11 @@
         <distortionK3>0.0</distortionK3>
         <distortionT1>0.0</distortionT1>
         <distortionT2>0.0</distortionT2>
-      </plugin>
+      </plugin> -->
     </sensor>
   </gazebo>
   <gazebo reference="imu_link">
     <sensor name="imu_sensor" type="imu">
-      <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
-        <ros>
-          <namespace>/sensors</namespace>
-          <remapping>~/out:=imu</remapping>
-        </ros>
-        <initial_orientation_as_reference>false</initial_orientation_as_reference>
-      </plugin>
       <always_on>true</always_on>
       <update_rate>100</update_rate>
       <visualize>true</visualize>
@@ -541,6 +580,8 @@
     <sensor name="lidar_sensor" type="gpu_lidar">
       <pose> 0 0 0 0 0 0 </pose>
       <update_rate>10</update_rate>
+      <topic>LaserScan</topic>
+      <always_on>1</always_on>
       <visualize>true</visualize>
       <ray>
         <scan>
@@ -568,54 +609,6 @@
           <stddev>0.0</stddev>
         </noise>
       </ray>
-      <plugin filename="libgazebo_ros_ray_sensor.so" name="gazebo_ros_laser_controller">
-        <ros>
-          <namespace>/sensors</namespace>
-          <remapping>~/out:=scan</remapping>
-        </ros>
-        <frame_name>lidar_link</frame_name>
-        <output_type>sensor_msgs/LaserScan</output_type>
-        <topic>scan</topic>
-        <min_range>0.3</min_range>
-        <max_range>40.0</max_range>
-        <gaussian_noise>0.008</gaussian_noise>
-        <always_on>1</always_on>
-        <render_engine>ogre2</render_engine>
-      </plugin>
     </sensor>
-  </gazebo>
-  <gazebo>
-    <plugin filename="libgazebo_ros_ackermann_drive.so" name="ackermann_plugin">
-      <ros>
-        <namespace>ackermann</namespace>
-        <remapping>cmd_vel:=cmd_vel</remapping>
-        <remapping>odom:=odom</remapping>
-        <remapping>distance:=distance</remapping>
-      </ros>
-      <!-- <left_joint>front_left_wheel_joint</left_joint>
-    <left_joint>rear_left_wheel_joint</left_joint>
-    <right_joint>front_right_wheel_joint</right_joint>
-    <right_joint>rear_right_wheel_joint</right_joint> 
-    -->
-      <!--
-    Docs
-    https://docs.ros.org/en/rolling/p/gazebo_plugins/generated/classgazebo__plugins_1_1GazeboRosAckermannDrive.html
-    -->
-      <left_steering_joint>front_left_steering_joint</left_steering_joint>
-      <right_steering_joint>front_right_steering_joint</right_steering_joint>
-      <front_right_joint>front_right_wheel_joint</front_right_joint>
-      <front_left_joint>front_left_wheel_joint</front_left_joint>
-      <rear_right_joint>rear_right_wheel_joint</rear_right_joint>
-      <rear_left_joint>rear_left_wheel_joint</rear_left_joint>
-      <steering_wheel_joint>steering_wheel_joint</steering_wheel_joint>
-      <wheel_separation>0.192</wheel_separation>
-      <!-- output -->
-      <publish_odom>true</publish_odom>
-      <publish_odom_tf>true</publish_odom_tf>
-      <publish_wheel_tf>true</publish_wheel_tf>
-      <publish_distance>true</publish_distance>
-      <odometry_frame>odom_demo</odometry_frame>
-      <robot_base_frame>base_link</robot_base_frame>
-    </plugin>
   </gazebo>
 </robot>
